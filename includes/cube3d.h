@@ -6,7 +6,7 @@
 /*   By: adamgallot <adamgallot@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:48:11 by adamgallot        #+#    #+#             */
-/*   Updated: 2026/01/19 19:38:42 by adamgallot       ###   ########.fr       */
+/*   Updated: 2026/01/19 19:42:35 by adamgallot       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum e_direction
 typedef enum e_macro
 {
     SUCCESS,
-    ERROR,
+    ERRORS,
     EXIT
 }   t_macro;
 
