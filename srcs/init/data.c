@@ -6,7 +6,7 @@
 /*   By: adamgallot <adamgallot@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 19:24:35 by adamgallot        #+#    #+#             */
-/*   Updated: 2026/01/19 19:35:01 by adamgallot       ###   ########.fr       */
+/*   Updated: 2026/01/20 12:43:58 by adamgallot       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,23 @@ void	create_img(t_img *img)
 	img->pixel_bits = 0;
 	img->size_line = 0;
 	img->endian = 0;
+}
+
+void	init_raycast(t_ray *ray)
+{
+	ray->map_x = 0;
+	ray->map_y = 0;
+	ray->camera_x = 0.0;
+	ray->raydir_x = 0.0;
+	ray->raydir_y = 0.0;
+	ray->step_x = 0;
+	ray->step_y = 0;
+	ray->sidedist_x = 0.0;
+	ray->sidedist_y = 0.0;
+	ray->deltadist_x = 0.0;
+	ray->deltadist_y = 0.0;
+	ray->side = 0;
+	ray->perpWallDist = 0.0;
 }
 
 void init_data(t_data *data)
