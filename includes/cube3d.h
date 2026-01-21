@@ -6,7 +6,7 @@
 /*   By: adamgallot <adamgallot@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:48:11 by adamgallot        #+#    #+#             */
-/*   Updated: 2026/01/21 20:21:08 by adamgallot       ###   ########.fr       */
+/*   Updated: 2026/01/21 21:50:32 by adamgallot       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,8 @@ typedef struct s_data
 	t_ray   ray;
 	t_mapinfotemp map_info;
     int    **texture_tab;
-    int    **texture;
+    int    **texture; // array de texture chargées
     t_texture_info  texture_info;
-	// texture_pixel.. 
 } t_data;
 
 
