@@ -6,7 +6,7 @@
 /*   By: adamgallot <adamgallot@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 18:48:25 by adamgallot        #+#    #+#             */
-/*   Updated: 2026/01/19 18:56:57 by adamgallot       ###   ########.fr       */
+/*   Updated: 2026/01/21 19:24:41 by adamgallot       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	before_quit(t_data *data, int flag)
 		free(data->mlx);
 	}
 	free_all(data);
+    if (flag != 0)
+        ft_putstr_fd("Error\n", 2);
 }
 
 int	quit_code(t_data *data)

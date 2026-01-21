@@ -6,7 +6,7 @@
 /*   By: adamgallot <adamgallot@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:26:23 by adamgallot        #+#    #+#             */
-/*   Updated: 2026/01/20 13:19:38 by adamgallot       ###   ########.fr       */
+/*   Updated: 2026/01/21 20:21:15 by adamgallot       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,44 +43,44 @@
 			
 
 Le Schéma des Vecteurs (Vue de dessus)
-      (Bord Gauche)                    (Écran / Camera Plane)                  (Bord Droit)
-           |                                     |                                     |
-           |<------------------------------------|------------------------------------>|
-           |          - plane                    |              + plane                |
-           |                                     |                                     |
-       Point A                               Point B                                Point C
-           \                                     ^                                     /
-            \                                    |                                    /
-             \                                   |                                   /
-              \                                  | dir                              /
-               \                                 |                                 /
-                \                                |                                /
-      rayDir     \                               |                               /
-    (pour x=0)    \                              |                              /
-                   \                             |                             /
-                    \                            |                            /
-                     \                           |                           /
-                      \                          |                          /
-                       \                         |                         /
-                        \                        |                        /
-                         \                       |                       /
-                          \                      |                      /
-                           \                     |                     /
-                            \                    |                    /
-                             \                   |                   /
-                              \                  |                  /
-                               \                 |                 /
-                                \                |                /
-                                 \               |               /
-                                  \              |              /
-                                   \             |             /
-                                    \            |            /
-                                     \           |           /
-                                      \          |          /
-                                       \         |         /
-                                        \        O
-                                      Position du Joueur
-                                          (pos)
+	  (Bord Gauche)                    (Écran / Camera Plane)                  (Bord Droit)
+		   |                                     |                                     |
+		   |<------------------------------------|------------------------------------>|
+		   |          - plane                    |              + plane                |
+		   |                                     |                                     |
+	   Point A                               Point B                                Point C
+		   \                                     ^                                     /
+			\                                    |                                    /
+			 \                                   |                                   /
+			  \                                  | dir                              /
+			   \                                 |                                 /
+				\                                |                                /
+	  rayDir     \                               |                               /
+	(pour x=0)    \                              |                              /
+				   \                             |                             /
+					\                            |                            /
+					 \                           |                           /
+					  \                          |                          /
+					   \                         |                         /
+						\                        |                        /
+						 \                       |                       /
+						  \                      |                      /
+						   \                     |                     /
+							\                    |                    /
+							 \                   |                   /
+							  \                  |                  /
+							   \                 |                 /
+								\                |                /
+								 \               |               /
+								  \              |              /
+								   \             |             /
+									\            |            /
+									 \           |           /
+									  \          |          /
+									   \         |         /
+										\        O
+									  Position du Joueur
+										  (pos)
 
 */
 
@@ -190,6 +190,36 @@ static void og_dda(t_data *data, t_ray *ray)
 }
 
 
+/*
+	Calcul de la hauteur du mur à afficher
+		-> en fonction de la distance perpendiculaire entre le plan caméra et le mur touché
+			-> permet de garder les murs droits
+		-> calcul des positions de début et de fin pour le dessin vertical du mur
+		-> calcul de la position exacte du mur touché (coordonnée x ou y en fonction du côté touché)	
+*/
+
+static void scaling_height(t_ray *ray, t_player *player, t_data *data)
+{
+	if (ray->side == 0)
+		ray->perpWallDist = (ray->map_x - player->pos_x + (1 - ray->step_x) / 2) / ray->raydir_x;
+	else
+		ray->perpWallDist = (ray->map_y - player->pos_y + (1 - ray->step_y) / 2) / ray->raydir_y;
+	if (ray->perpWallDist == 0)
+		ray->perpWallDist = 0.1;
+	ray->line_height = (int) (data->win_height / ray->perpWallDist);
+	ray->start_draw = -(ray->line_height / 2) + data->win_height / 2;
+	if (ray->start_draw < 0)
+		ray->start_draw = 0;
+	ray->end_draw = ray->line_height / 2 + data->win_height / 2;
+	if (ray->end_draw >= data->win_height)
+		ray->end_draw = data->win_height - 1;
+	if (ray->side == 0)
+		ray->wall_x = player->pos_y + ray->perpWallDist * ray->raydir_y;
+	else
+		ray->wall_x = player->pos_x + ray->perpWallDist * ray->raydir_x; //coordonnée exacte du mur touché
+	ray->wall_x -= floor((ray->wall_x));
+}
+
 int actual_raycasting(t_player *player, t_data *data)
 {
 	t_ray	ray;
@@ -201,8 +231,8 @@ int actual_raycasting(t_player *player, t_data *data)
 		initialization_raycast(x, &ray, player);
 		setting_dda(&ray, player);
 		og_dda(data, &ray);
-		//taille_mur_ecran(&ray, player);
-		//texute...(x, &ray, data, &img);
+		scaling_height(&ray, player, data);
+		new_texture(data, &ray, &data->texture_info, x);
 		x++;
 	}
 	return (0);

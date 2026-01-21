@@ -6,7 +6,7 @@
 /*   By: adamgallot <adamgallot@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:48:11 by adamgallot        #+#    #+#             */
-/*   Updated: 2026/01/20 13:19:51 by adamgallot       ###   ########.fr       */
+/*   Updated: 2026/01/21 20:21:08 by adamgallot       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "fcntl.h"
 //#include "mlx.h"
 #include "handler.h"
+#include "../lib/libft/libft.h"
 
 # define WIDTH  1024
 # define HEIGHT 720
@@ -61,6 +62,11 @@ typedef struct s_ray
 	double perpWallDist; // distance entre le plan cam et le mur 
 	// MAIS C'EST LA DISTANCE PERPENDICULAIRE -> pour garder les murs droits
 	int side;
+    int line_height;
+    int start_draw;
+    int end_draw;
+    int wall_x;
+    
 	
 }   t_ray;
 
@@ -73,6 +79,24 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+
+typedef struct s_texture_info
+{
+    char *path_north;
+    char *path_south;
+    char *path_east;
+    char *path_west;
+    int  *ceiling_tab;
+    int  *floor_tab;
+    long ceiling_rgb;
+    long floor_rgb;
+    int texture_size;
+    int texture_index;
+    int x_tex;
+    int y_tex;
+    double step;
+    double tex_pos;
+}   t_texture_info;
 
 // tempororaire stv changer des trucs mais selon mes recherches c'est le plus effiace
 typedef struct mapinfotemp
@@ -119,6 +143,9 @@ typedef struct s_data
 	t_player player;
 	t_ray   ray;
 	t_mapinfotemp map_info;
+    int    **texture_tab;
+    int    **texture;
+    t_texture_info  texture_info;
 	// texture_pixel.. 
 } t_data;
 
@@ -133,8 +160,16 @@ void	listen_input(t_data *data);
 
 //exit
 void	quit_code(t_data *data);
+void	before_quit(t_data *data, int flag);
 
 //ray
 int actual_raycasting(t_player *player, t_data *data);
 
+
+//free 
+void	free_tab(void **tab);
+
+//texture
+void	init_texture_tab(t_data *data);
+void	new_texture(t_data *data, t_ray *ray, t_texture_info *texture, int x);
 #endif
