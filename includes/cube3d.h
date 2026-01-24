@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adamgallot <adamgallot@student.42.fr>      +#+  +:+       +#+        */
+/*   By: roazouan <roazouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:48:11 by adamgallot        #+#    #+#             */
-/*   Updated: 2026/01/19 19:42:35 by adamgallot       ###   ########.fr       */
+/*   Updated: 2026/01/22 20:53:03 by roazouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define CUBE3D_H
 
 #include "stdio.h"
+#include "libft.h"
 #include "stdlib.h"
 #include "math.h"
 #include "stdbool.h"
 #include "string.h"
 #include "unistd.h"
 #include "fcntl.h"
-//#include "mlx.h"
+#include "mlx.h"
 #include "handler.h"
 
 # define WIDTH  1024
@@ -41,6 +42,30 @@ typedef enum e_macro
     EXIT
 }   t_macro;
 
+typedef enum e_texture
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	F,
+	C
+}   t_texture;
+
+typedef struct s_parsing
+{
+	char    *no_texture;
+	char    *so_texture;
+	char    *we_texture;
+	char    *ea_texture;
+	char    *floor_color;
+	char    *ceiling_color;
+	char 	**map;
+	char   **cp_map;
+	int		player_start;
+	int   player_start_x;
+	int   player_start_y;
+}	t_parsing;
 
 typedef struct s_img
 {
@@ -85,6 +110,21 @@ typedef struct s_data
 	t_player player;
 } t_data;
 
+
+//utils parsing
+char **ft_arraydup(char **src, char **dst);
+int ft_arraylen(char **array);
+
+//parsing
+void 	init_textures(t_parsing *parsing, int fd);
+void 	init_map(t_parsing *parsing, int fd);
+char	*read_line(int fd);
+int	check_parsing(t_parsing *parsing);
+void normalize_map(char **map);
+
+//check map
+void check_map_flood(t_parsing *parsing, int new_y, int new_x, char perso);
+int chrmap(char **map);
 
 //handling
 void	listen_input(t_data *data);

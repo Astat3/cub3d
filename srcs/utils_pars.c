@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   utils_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roazouan <roazouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/19 19:38:54 by roazouan          #+#    #+#             */
-/*   Updated: 2026/01/19 19:39:43 by roazouan         ###   ########.fr       */
+/*   Created: 2026/01/22 18:26:23 by roazouan          #+#    #+#             */
+/*   Updated: 2026/01/22 18:26:47 by roazouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/cube3d.h"
 
-#ifndef CUB3D_H
-# define CUB3D_H
+int ft_arraylen(char **array)
+{
+	int	i;
 
-# include "libft.h"
-# include <stdbool.h>
-# include <stdlib.h>
-# include <unistd.h>
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
 
-# define ERROR 1
-# define SUCCESS 0
+char **ft_arraydup(char **src, char **dst)
+{
+	int	i;
 
-
-
-#endif
+	i = 0;
+	while (src[i])
+	{
+		dst[i] = ft_strdup(src[i]);
+		i++;
+	}
+	dst[i] = NULL;
+	return (dst);
+}
