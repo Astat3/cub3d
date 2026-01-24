@@ -6,7 +6,7 @@
 /*   By: adamgallot <adamgallot@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 14:48:11 by adamgallot        #+#    #+#             */
-/*   Updated: 2026/01/21 21:50:32 by adamgallot       ###   ########.fr       */
+/*   Updated: 2026/01/24 17:54:38 by adamgallot       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define CUBE3D_H
 
 #include "stdio.h"
+#include "libft.h"
 #include "stdlib.h"
 #include "math.h"
 #include "stdbool.h"
 #include "string.h"
 #include "unistd.h"
 #include "fcntl.h"
-//#include "mlx.h"
+#include "mlx.h"
 #include "handler.h"
 #include "../lib/libft/libft.h"
 
@@ -44,6 +45,30 @@ typedef enum e_macro
 	EXIT
 }   t_macro;
 
+typedef enum e_texture
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	F,
+	C
+}   t_texture;
+
+typedef struct s_parsing
+{
+	char    *no_texture;
+	char    *so_texture;
+	char    *we_texture;
+	char    *ea_texture;
+	char    *floor_color;
+	char    *ceiling_color;
+	char 	**map;
+	char   **cp_map;
+	int		player_start;
+	int   player_start_x;
+	int   player_start_y;
+}	t_parsing;
 
 typedef struct s_ray
 {
@@ -88,8 +113,8 @@ typedef struct s_texture_info
     char *path_west;
     int  *ceiling_tab;
     int  *floor_tab;
-    long ceiling_rgb;
-    long floor_rgb;
+    long ceiling_hex;
+    long floor_hex;
     int texture_size;
     int texture_index;
     int x_tex;
@@ -112,7 +137,7 @@ typedef struct mapinfotemp
 
 typedef struct s_player
 {
-	char  	get_dir; // 'N', 'S', 'E', 'W'
+	char  	get_dir;; // N S E W
 	double	pos_x; // player's position x
 	double	pos_y;
 	double	dir_x; // player's direction vector x
@@ -143,7 +168,7 @@ typedef struct s_data
 	t_player player;
 	t_ray   ray;
 	t_mapinfotemp map_info;
-    int    **texture_tab;
+    int    **texture_tab; // texture pixel
     int    **texture; // array de texture chargées
     t_texture_info  texture_info;
 } t_data;
@@ -153,6 +178,21 @@ typedef struct s_data
 void	init_data(t_data *data);
 void	create_img(t_img *img);
 void	init_raycast(t_ray *ray);
+void    init_img(t_data *data, t_img *img, int width, int height);
+//utils parsing
+char **ft_arraydup(char **src, char **dst);
+int ft_arraylen(char **array);
+
+//parsing
+void 	init_textures(t_parsing *parsing, int fd);
+void 	init_map(t_parsing *parsing, int fd);
+char	*read_line(int fd);
+int	check_parsing(t_parsing *parsing);
+void normalize_map(char **map);
+
+//check map
+void check_map_flood(t_parsing *parsing, int new_y, int new_x, char perso);
+int chrmap(char **map);
 
 //handling
 void	listen_input(t_data *data);
@@ -171,4 +211,10 @@ void	free_tab(void **tab);
 //texture
 void	init_texture_tab(t_data *data);
 void	new_texture(t_data *data, t_ray *ray, t_texture_info *texture, int x);
+// render
+void   img_pixel(t_img *img, int x, int y, int color);
+
+//player 
+int	valide_move(t_data *data, double acutal_x, double actual_y);
+int og_move(t_data *data);
 #endif

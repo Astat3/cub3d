@@ -1,12 +1,12 @@
-NAME = Cub3D
-MY_NAME = Cub3D Project
+NAME = cub3D
+MY_NAME = cub3D Project
 
 SRCS = $(wildcard srcs/*.c)
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra -I includes/ -g
 
-LIB = ft_printf/libftprintf.a libft/libft.a
+LIB = libft/libft.a
 DEPS = $(addprefix lib/, $(LIB))
 
 # Colors
@@ -58,8 +58,6 @@ libs:
 	@echo "  $(BOLD)$(BLUE)$(GEAR) Building libraries...$(RESET)"
 	@$(MAKE) --no-print-directory -C lib/libft > /dev/null 
 	@echo "  $(GREEN)$(CHECK)$(RESET) libft"
-	@$(MAKE) --no-print-directory -C lib/ft_printf > /dev/null 
-	@echo "  $(GREEN)$(CHECK)$(RESET) ft_printf"
 	@echo ""
 	@echo "  $(BOLD)$(BLUE)$(GEAR) Compiling source files...$(RESET)"
 
@@ -72,8 +70,6 @@ clean:
 	@echo "  $(BOLD)$(YELLOW)$(CLEAN) Cleaning...$(RESET)"
 	@rm -f $(OBJS)
 	@$(MAKE) --no-print-directory -C lib/libft fclean > /dev/null 
-	@$(MAKE) --no-print-directory -C lib/ft_printf fclean > /dev/null 
-	@echo "  $(GREEN)$(CHECK)$(RESET) Object files removed"
 	@echo ""
 
 fclean: clean
@@ -97,9 +93,6 @@ debug_libs:
 	@echo ""
 	@echo "  $(BOLD)$(BLUE)$(GEAR) Building libft...$(RESET)"
 	$(MAKE) -C lib/libft re
-	@echo ""
-	@echo "  $(BOLD)$(BLUE)$(GEAR) Building ft_printf...$(RESET)"
-	$(MAKE) -C lib/ft_printf re
 	@echo ""
 
 debug_srcs: $(OBJS)
