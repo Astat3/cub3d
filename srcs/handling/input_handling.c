@@ -53,10 +53,8 @@ static int	key_release_handler(int key_input, t_data *data)
 
 void	listen_input(t_data *data)
 {
-	// 1LL<<0 = KeyPressMask
-	// 1LL<<1 = KeyReleaseMask
-	// Juste sur mac y a pas donc c'est pour rendre le code portable
 	mlx_hook(data->win, 2, 1L<<0, &key_press_handling, data);
 	mlx_hook(data->win, 3, 1L<<1, &key_release_handler, data);
-	mlx_hook(data->win, 17, 0, &quit_code, data); // croix rouge
+	mlx_hook(data->win, 17, 0, &quit_code, data);
+	mlx_loop_hook(data->mlx, &game_loop, data);
 }

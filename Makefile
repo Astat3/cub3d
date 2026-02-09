@@ -1,10 +1,17 @@
 NAME = cub3D
 MY_NAME = cub3D Project
 
-SRCS = $(wildcard srcs/*.c)
+SRCS = $(wildcard srcs/*.c) $(wildcard srcs/init/*.c) \
+	$(wildcard srcs/parsing/*.c) $(wildcard srcs/exit/*.c) \
+	$(wildcard srcs/handling/*.c) $(wildcard srcs/render/*.c)
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra -I includes/ -g
+
+MLX_DIR = lib/minilibx_mms_20200219
+MLX_LIB = $(MLX_DIR)/libmlx.dylib
+MLX_FLAGS = -L $(MLX_DIR) -lmlx
+MLX_LOCAL = libmlx.dylib
 
 LIB = libft/libft.a
 DEPS = $(addprefix lib/, $(LIB))
@@ -44,20 +51,24 @@ all: header $(NAME)
 header:
 	@echo ""
 	@echo "  $(BOLD)$(MAGENTA)╔════════════════════════════════════════════════════════════════════════════╗$(RESET)"
-	@echo "  $(BOLD)$(MAGENTA)║$(RESET)    $(BOLD)$(CYAN)$(ROCKET) $(MY_NAME) $(RESET)  $(DIM)by roazouan && Agallot$(RESET)     $(BOLD)$(MAGENTA)                             ║$(RESET)"
+	@echo "  $(BOLD)$(MAGENTA)║$(RESET)    $(BOLD)$(CYAN)$(ROCKET) $(MY_NAME) $(RESET)  $(DIM)by roazouan && Agallot$(RESET)     $(BOLD)$(MAGENTA)                          ║$(RESET)"
 	@echo "  $(BOLD)$(MAGENTA)╚════════════════════════════════════════════════════════════════════════════╝$(RESET)"
 	@echo ""
 
 $(NAME): libs $(OBJS)
 	@echo ""
 	@echo "  $(BOLD)$(YELLOW)$(LINK) Linking...$(RESET)"
-	@cc $(CFLAGS) $(OBJS) -o $(NAME) $(DEPS) -lreadline
+	@cc $(CFLAGS) $(OBJS) -o $(NAME) $(DEPS) $(MLX_FLAGS) -lreadline
+	@cp -f $(MLX_LIB) $(MLX_LOCAL)
 	@echo "  $(GREEN)$(CHECK)$(RESET) $(BOLD)$(NAME)$(RESET) created"
 
 libs:
 	@echo "  $(BOLD)$(BLUE)$(GEAR) Building libraries...$(RESET)"
 	@$(MAKE) --no-print-directory -C lib/libft > /dev/null 
 	@echo "  $(GREEN)$(CHECK)$(RESET) libft"
+	@$(MAKE) --no-print-directory -C $(MLX_DIR) > /dev/null 
+	@echo "  $(GREEN)$(CHECK)$(RESET) mlx"
+	@cp -f $(MLX_LIB) $(MLX_LOCAL)
 	@echo ""
 	@echo "  $(BOLD)$(BLUE)$(GEAR) Compiling source files...$(RESET)"
 
@@ -69,7 +80,9 @@ clean:
 	@echo ""
 	@echo "  $(BOLD)$(YELLOW)$(CLEAN) Cleaning...$(RESET)"
 	@rm -f $(OBJS)
+	@rm -f $(MLX_LOCAL)
 	@$(MAKE) --no-print-directory -C lib/libft fclean > /dev/null 
+	@$(MAKE) --no-print-directory -C $(MLX_DIR) clean > /dev/null 
 	@echo ""
 
 fclean: clean
@@ -83,7 +96,7 @@ re: fclean all
 debug: header debug_libs debug_srcs
 	@echo ""
 	@echo "  $(BOLD)$(YELLOW)$(LINK) Linking...$(RESET)"
-	cc $(CFLAGS) $(OBJS) -o $(NAME) $(DEPS) -lreadline
+	cc $(CFLAGS) $(OBJS) -o $(NAME) $(DEPS) $(MLX_FLAGS) -lreadline
 	@echo ""
 	@echo "  $(BOLD)$(GREEN)$(CHECK) Debug build complete!$(RESET)"
 	@echo ""
@@ -93,6 +106,10 @@ debug_libs:
 	@echo ""
 	@echo "  $(BOLD)$(BLUE)$(GEAR) Building libft...$(RESET)"
 	$(MAKE) -C lib/libft re
+	@echo ""
+	@echo "  $(BOLD)$(BLUE)$(GEAR) Building mlx...$(RESET)"
+	$(MAKE) -C $(MLX_DIR) re
+	@cp -f $(MLX_LIB) $(MLX_LOCAL)
 	@echo ""
 
 debug_srcs: $(OBJS)

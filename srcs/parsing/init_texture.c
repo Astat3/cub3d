@@ -6,11 +6,11 @@
 /*   By: roazouan <roazouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 19:57:52 by roazouan          #+#    #+#             */
-/*   Updated: 2026/01/20 20:08:24 by roazouan         ###   ########.fr       */
+/*   Updated: 2026/01/24 17:06:39 by roazouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cube3d.h"
+#include "../../includes/cube3d.h"
 
 static void	exit_error(int fd, const char *msg)
 {
@@ -106,7 +106,7 @@ static int	has_whitespace(const char *str)
     return (0);
 }
 
-static int	has_suffix(const char *str, const char *suffix)
+int	has_suffix(const char *str, const char *suffix)
 {
     size_t	len;
     size_t	suffix_len;
