@@ -153,7 +153,7 @@ int		init_frame_img(t_data *data);
 
 void	init_textures(t_parsing *parsing, int fd);
 void	init_map(t_parsing *parsing, int fd);
-char	*read_line(int fd);
+char	*read_line(int fd, t_parsing *parsing);
 int		check_parsing(t_parsing *parsing);
 void	normalize_map(char **map);
 void	check_map_flood(t_parsing *parsing, int new_y, int new_x, char perso);
@@ -167,6 +167,7 @@ void	render_column(t_data *data, int x);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 void	free_tab(char **tab);
+void	free_parsing(t_parsing *parsing);
 void	free_data(t_data *data);
 int		quit_code(t_data *data);
 

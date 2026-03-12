@@ -8,10 +8,10 @@ OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra -I includes/ -g
 
-MLX_DIR = lib/minilibx_mms_20200219
-MLX_LIB = $(MLX_DIR)/libmlx.dylib
-MLX_FLAGS = -L $(MLX_DIR) -lmlx
-MLX_LOCAL = libmlx.dylib
+MLX_DIR = lib/minilibx-linux
+MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_FLAGS = -L $(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+MLX_LOCAL = libmlx.a
 
 LIB = libft/libft.a
 DEPS = $(addprefix lib/, $(LIB))

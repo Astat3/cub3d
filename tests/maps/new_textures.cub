@@ -1,0 +1,14 @@
+NO textures/ai_stone_wall.xpm
+SO textures/ai_wooden_planks.xpm
+WE textures/ai_mossy_bricks.xpm
+EA textures/ai_iron_bars.xpm
+
+F 40,40,40
+C 15,15,30
+
+11111111
+10000001
+10000001
+100N0001
+10000001
+11111111

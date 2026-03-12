@@ -47,6 +47,7 @@ static void	flood_direction(t_parsing *p, int y, int x, char perso)
         || can_flood(p, y, x - 1, perso) == -1)
     {
         printf("Error: Character is not enclosed by walls.\n");
+        free_parsing(p);
         exit(ERRORS);
     }
     if (can_flood(p, y + 1, x, perso) == 1)
@@ -64,11 +65,13 @@ void	check_map_flood(t_parsing *parsing, int new_y, int new_x, char perso)
     if (!is_valid_pos(parsing, new_y, new_x))
     {
         printf("Error: Character is not enclosed by walls.\n");
+        free_parsing(parsing);
         exit(ERRORS);
     }
     if (parsing->cp_map[new_y][new_x] == ' ')
     {
         printf("Error: Character is not enclosed by walls.\n");
+        free_parsing(parsing);
         exit(ERRORS);
     }
     if (parsing->cp_map[new_y][new_x] == '1'

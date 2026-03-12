@@ -67,19 +67,19 @@ void	init_map(t_parsing *parsing, int fd)
 	char	*map_str;
 
 	map_str = ft_strdup("");
-	line = read_line(fd);
+	line = read_line(fd, parsing);
 	while (line)
 	{
 		if (is_map_line(line))
 			map_str = append_line(map_str, line);
 		free(line);
-		line = read_line(fd);
+		line = read_line(fd, parsing);
 	}
 	close(fd);
 	if (!map_str || map_str[0] == '\0')
-		(free(map_str), printf("Error: Missing map.\n"), exit(ERRORS));
+		(free(map_str), free_parsing(parsing), printf("Error: Missing map.\n"), exit(ERRORS));
 	parsing->map = ft_split(map_str, '\n');
 	free(map_str);
 	if (!parsing->map || !parsing->map[0])
-		(printf("Error: Invalid map.\n"), exit(ERRORS));
+		(free_parsing(parsing), printf("Error: Invalid map.\n"), exit(ERRORS));
 }

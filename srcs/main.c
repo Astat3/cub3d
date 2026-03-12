@@ -12,27 +12,6 @@
 
 #include "../includes/cube3d.h"
 
-static void	free_parsing(t_parsing *parsing)
-{
-	if (!parsing)
-		return ;
-	if (parsing->no_texture)
-		free(parsing->no_texture);
-	if (parsing->so_texture)
-		free(parsing->so_texture);
-	if (parsing->we_texture)
-		free(parsing->we_texture);
-	if (parsing->ea_texture)
-		free(parsing->ea_texture);
-	if (parsing->floor_color)
-		free(parsing->floor_color);
-	if (parsing->ceiling_color)
-		free(parsing->ceiling_color);
-	free_tab(parsing->map);
-	free_tab(parsing->cp_map);
-	free(parsing);
-}
-
 static void	detach_from_parsing(t_parsing *parsing)
 {
 	parsing->no_texture = NULL;
