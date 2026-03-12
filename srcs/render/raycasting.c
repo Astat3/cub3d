@@ -151,6 +151,10 @@ void	render_column(t_data *data, int x)
 	{
 		d = y * 256 - data->win_height * 128 + ray.line_height * 128;
 		ray.tex_y = ((d * tex->height) / ray.line_height) / 256;
+		if (ray.tex_y < 0)
+			ray.tex_y = 0;
+		if (ray.tex_y >= tex->height)
+			ray.tex_y = tex->height - 1;
 		color = tex->addr[ray.tex_y * (tex->size_line / 4) + ray.tex_x];
 		my_mlx_pixel_put(&data->frame, x, y, color);
 		y++;

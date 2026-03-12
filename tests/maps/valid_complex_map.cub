@@ -1,0 +1,17 @@
+NO textures/metal_wall_dark.xpm
+SO textures/metal_wall_light.xpm
+WE textures/metal_wall_rusty.xpm
+EA textures/metal_wall.xpm
+
+F 100,150,200
+C 200,150,100
+
+11111111111
+10000000001
+10110011001
+10100010001
+10100011101
+10000000001
+10110010001
+10N00000001
+11111111111
