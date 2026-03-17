@@ -13,14 +13,13 @@
 #ifndef CUBE3D_H
 # define CUBE3D_H
 
-# include "stdio.h"
+# include <stdio.h>
 # include "libft.h"
-# include "stdlib.h"
-# include "math.h"
-# include "stdbool.h"
-# include "string.h"
-# include "unistd.h"
-# include "fcntl.h"
+# include <stdlib.h>
+# include <math.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <fcntl.h>
 # include "mlx.h"
 # include "handler.h"
 
@@ -152,6 +151,10 @@ int		init_textures_img(t_data *data);
 int		init_frame_img(t_data *data);
 
 void	init_textures(t_parsing *parsing, int fd);
+void	set_texture(t_parsing *parsing, char **dst, const char *value,
+			const char *id);
+void	set_color(t_parsing *parsing, char **dst, const char *value,
+			const char *id);
 void	init_map(t_parsing *parsing, int fd);
 char	*read_line(int fd, t_parsing *parsing);
 int		check_parsing(t_parsing *parsing);
@@ -165,6 +168,9 @@ void	update_player(t_data *data);
 void	render_frame(t_data *data);
 void	render_column(t_data *data, int x);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	init_ray(t_data *data, t_ray *ray, int x);
+void	init_step_and_side_dist(t_data *data, t_ray *ray);
+void	perform_dda(t_data *data, t_ray *ray);
 
 void	free_tab(char **tab);
 void	free_parsing(t_parsing *parsing);

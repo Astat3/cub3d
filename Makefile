@@ -1,9 +1,25 @@
 NAME = cub3D
 MY_NAME = cub3D Project
 
-SRCS = $(wildcard srcs/*.c) $(wildcard srcs/init/*.c) \
-	$(wildcard srcs/parsing/*.c) $(wildcard srcs/exit/*.c) \
-	$(wildcard srcs/handling/*.c) $(wildcard srcs/render/*.c)
+SRCS =	srcs/main.c \
+		srcs/init/data.c \
+		srcs/init/player.c \
+		srcs/init/textures.c \
+		srcs/init/parse_color.c \
+		srcs/parsing/init_texture.c \
+		srcs/parsing/parse_line.c \
+		srcs/parsing/parse_texture.c \
+		srcs/parsing/init_map.c \
+		srcs/parsing/check_parsing.c \
+		srcs/parsing/check_map.c \
+		srcs/parsing/utils_pars.c \
+		srcs/handling/input_handling.c \
+		srcs/handling/game_loop.c \
+		srcs/render/raycasting.c \
+		srcs/render/render.c \
+		srcs/render/dda.c \
+		srcs/exit/exit.c \
+		srcs/exit/freeeee.c
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra -I includes/ -g

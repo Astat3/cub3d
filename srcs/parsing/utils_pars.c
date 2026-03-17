@@ -12,7 +12,7 @@
 
 #include "../../includes/cube3d.h"
 
-int ft_arraylen(char **array)
+int	ft_arraylen(char **array)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int ft_arraylen(char **array)
 	return (i);
 }
 
-char **ft_arraydup(char **src, char **dst)
+char	**ft_arraydup(char **src, char **dst)
 {
 	int	i;
 

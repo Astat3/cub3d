@@ -18,7 +18,7 @@ static int	key_press_handling(int key_input, t_data *data)
 	if (key_input == XK_Escape)
 		quit_code(data);
 	else if (key_input == XK_w)
-		data->player.move_y = 1;	
+		data->player.move_y = 1;
 	else if (key_input == XK_s)
 		data->player.move_y = -1;
 	else if (key_input == XK_a)

@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 
-#ifndef KEYS_H
-# define KEYS_H
+#ifndef HANDLER_H
+# define HANDLER_H
 
 # ifdef __APPLE__
 #  define XK_Escape     53
