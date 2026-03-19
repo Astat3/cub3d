@@ -20,7 +20,7 @@
 # include <stdbool.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "mlx.h"
+# include "../lib/minilibx-linux/mlx.h"
 # include "handler.h"
 
 # define WIDTH 1024
