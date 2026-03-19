@@ -1,7 +1,7 @@
-NO textures/ai_stone_wall.xpm
-SO textures/ai_wooden_planks.xpm
-WE textures/ai_mossy_bricks.xpm
-EA textures/ai_iron_bars.xpm
+NO textures/iron_bars.xpm
+SO textures/mossy_bricks.xpm
+WE textures/stone_wall.xpm
+EA textures/wooden_planks.xpm
 
 F 40,40,40
 C 15,15,30

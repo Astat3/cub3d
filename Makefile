@@ -22,11 +22,20 @@ SRCS =	srcs/main.c \
 		srcs/exit/freeeee.c
 OBJS = $(SRCS:.c=.o)
 
+CC = cc
 CFLAGS = -Wall -Werror -Wextra -I includes/ -g
+RM = rm -f
 
-MLX_DIR = lib/minilibx-linux
+UNAME := $(shell uname -s)
+ifeq ($(UNAME), Linux)
+	MLX_DIR = lib/minilibx-linux
+	MLX_FLAGS = -L $(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+else
+	MLX_DIR = lib/minilibx_opengl_20191021
+	MLX_FLAGS = -L $(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+endif
+
 MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX_FLAGS = -L $(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 MLX_LOCAL = libmlx.a
 
 LIB = libft/libft.a
@@ -71,38 +80,40 @@ header:
 	@echo "  $(BOLD)$(MAGENTA)╚════════════════════════════════════════════════════════════════════════════╝$(RESET)"
 	@echo ""
 
-$(NAME): libs $(OBJS)
-	@echo ""
-	@echo "  $(BOLD)$(YELLOW)$(LINK) Linking...$(RESET)"
-	@cc $(CFLAGS) $(OBJS) -o $(NAME) $(DEPS) $(MLX_FLAGS) -lreadline
-	@cp -f $(MLX_LIB) $(MLX_LOCAL)
-	@echo "  $(GREEN)$(CHECK)$(RESET) $(BOLD)$(NAME)$(RESET) created"
-
-libs:
-	@echo "  $(BOLD)$(BLUE)$(GEAR) Building libraries...$(RESET)"
+$(DEPS):
+	@echo "  $(BOLD)$(BLUE)$(GEAR) Building libft...$(RESET)"
 	@$(MAKE) --no-print-directory -C lib/libft > /dev/null 
 	@echo "  $(GREEN)$(CHECK)$(RESET) libft"
-	@$(MAKE) --no-print-directory -C $(MLX_DIR) > /dev/null 
+
+$(MLX_LIB):
+	@echo "  $(BOLD)$(BLUE)$(GEAR) Building mlx...$(RESET)"
+	@if [ -d "$(MLX_DIR)" ]; then $(MAKE) --no-print-directory -C $(MLX_DIR) > /dev/null; else echo "  $(YELLOW)No mlx directory found: $(MLX_DIR)$(RESET)"; fi
 	@echo "  $(GREEN)$(CHECK)$(RESET) mlx"
-	@cp -f $(MLX_LIB) $(MLX_LOCAL)
+	@if [ -f "$(MLX_LIB)" ]; then cp -f $(MLX_LIB) $(MLX_LOCAL); fi
+
+$(NAME): $(DEPS) $(MLX_LIB) $(OBJS)
 	@echo ""
-	@echo "  $(BOLD)$(BLUE)$(GEAR) Compiling source files...$(RESET)"
+	@echo "  $(BOLD)$(YELLOW)$(LINK) Linking...$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(DEPS) $(MLX_FLAGS) -lreadline
+	@echo "  $(GREEN)$(CHECK)$(RESET) $(BOLD)$(NAME)$(RESET) created"
+
+
 
 srcs/%.o: srcs/%.c
-	@cc $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf "  $(GREEN)$(CHECK)$(RESET) %s\n" $(notdir $<)
 
 clean:
 	@echo ""
 	@echo "  $(BOLD)$(YELLOW)$(CLEAN) Cleaning...$(RESET)"
-	@rm -f $(OBJS)
-	@rm -f $(MLX_LOCAL)
+	@$(RM) $(OBJS)
+	@$(RM) $(MLX_LOCAL)
 	@$(MAKE) --no-print-directory -C lib/libft fclean > /dev/null 
-	@$(MAKE) --no-print-directory -C $(MLX_DIR) clean > /dev/null 
+	@if [ -d "$(MLX_DIR)" ]; then $(MAKE) --no-print-directory -C $(MLX_DIR) clean > /dev/null; fi 
 	@echo ""
 
 fclean: clean
-	@rm -rf $(NAME)
+	@$(RM) $(NAME)
 	@echo "  $(GREEN)$(CHECK)$(RESET) $(NAME) removed"
 	@echo ""
 
@@ -112,7 +123,7 @@ re: fclean all
 debug: header debug_libs debug_srcs
 	@echo ""
 	@echo "  $(BOLD)$(YELLOW)$(LINK) Linking...$(RESET)"
-	cc $(CFLAGS) $(OBJS) -o $(NAME) $(DEPS) $(MLX_FLAGS) -lreadline
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(DEPS) $(MLX_FLAGS) -lreadline
 	@echo ""
 	@echo "  $(BOLD)$(GREEN)$(CHECK) Debug build complete!$(RESET)"
 	@echo ""

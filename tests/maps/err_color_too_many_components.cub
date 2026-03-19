@@ -1,7 +1,7 @@
-NO textures/metal_wall_dark.xpm
-SO textures/metal_wall_light.xpm
-WE textures/metal_wall_rusty.xpm
-EA textures/metal_wall.xpm
+NO textures/iron_bars.xpm
+SO textures/mossy_bricks.xpm
+WE textures/stone_wall.xpm
+EA textures/wooden_planks.xpm
 
 F 100,100,100,100
 C 100,100,100

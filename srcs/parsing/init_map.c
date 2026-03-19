@@ -61,23 +61,50 @@ static char	*append_line(char *dst, char *line)
 	return (tmp);
 }
 
+static void	check_line_state(char *line, int *state, t_parsing *parsing)
+{
+	if (*state == 0)
+	{
+		if (line[0] != '\n' && is_map_line(line))
+			*state = 1;
+		else if (line[0] != '\n')
+			(printf("Error: Invalid map content.\n"),
+				free_parsing(parsing), exit(ERRORS));
+	}
+	else if (*state == 1)
+	{
+		if (line[0] == '\n')
+			*state = 2;
+		else if (!is_map_line(line))
+			(printf("Error: Invalid map content.\n"),
+				free_parsing(parsing), exit(ERRORS));
+	}
+	else if (*state == 2 && line[0] != '\n')
+		(printf("Error: Trailing garbage after map.\n"),
+			free_parsing(parsing), exit(ERRORS));
+}
+
 void	init_map(t_parsing *parsing, int fd)
 {
 	char	*line;
 	char	*map_str;
+	int		state;
 
+	state = 0;
 	map_str = ft_strdup("");
 	line = read_line(fd, parsing);
 	while (line)
 	{
-		if (is_map_line(line))
+		check_line_state(line, &state, parsing);
+		if (state == 1)
 			map_str = append_line(map_str, line);
 		free(line);
 		line = read_line(fd, parsing);
 	}
 	close(fd);
 	if (!map_str || map_str[0] == '\0')
-		(free(map_str), free_parsing(parsing), printf("Error: Missing map.\n"), exit(ERRORS));
+		(free(map_str), free_parsing(parsing),
+			printf("Error: Missing map.\n"), exit(ERRORS));
 	parsing->map = ft_split(map_str, '\n');
 	free(map_str);
 	if (!parsing->map || !parsing->map[0])
