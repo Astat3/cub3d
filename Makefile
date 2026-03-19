@@ -131,7 +131,7 @@ debug_libs:
 debug_srcs: $(OBJS)
 	@echo ""
 	@echo "  $(BOLD)$(GREEN)$(CHECK) All object files created:$(RESET)"
-	@ls -la srcs/*.o
+	@ls -la $(OBJS)
 	@echo ""
 
 .PHONY: all clean fclean re header libs debug debug_libs debug_srcs
