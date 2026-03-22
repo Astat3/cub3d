@@ -17,9 +17,6 @@ int	quit_code(t_data *data)
 	if (!data)
 		exit(0);
 	free_data(data);
-	if (data->win && data->mlx)
-		mlx_destroy_window(data->mlx, data->win);
-	data->win = NULL;
 	exit(0);
 	return (0);
 }

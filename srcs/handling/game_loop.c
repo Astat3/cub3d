@@ -43,9 +43,11 @@ static void	move_player(t_data *data)
 		offset_x = -0.20;
 	if (step_y < 0)
 		offset_y = -0.20;
-	if (is_walkable(data, data->player.pos_x + step_x + offset_x, data->player.pos_y))
+	if (is_walkable(data, data->player.pos_x + step_x + offset_x,
+			data->player.pos_y))
 		data->player.pos_x += step_x;
-	if (is_walkable(data, data->player.pos_x, data->player.pos_y + step_y + offset_y))
+	if (is_walkable(data, data->player.pos_x,
+			data->player.pos_y + step_y + offset_y))
 		data->player.pos_y += step_y;
 }
 

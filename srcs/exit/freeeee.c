@@ -43,6 +43,8 @@ void	free_parsing(t_parsing *parsing)
 		free(parsing->floor_color);
 	if (parsing->ceiling_color)
 		free(parsing->ceiling_color);
+	if (parsing->map_str)
+		free(parsing->map_str);
 	free_tab(parsing->map);
 	free_tab(parsing->cp_map);
 	free(parsing);
@@ -99,4 +101,13 @@ void	free_data(t_data *data)
 	free_strings(data);
 	free_tab(data->map);
 	data->map = NULL;
+	if (data->win && data->mlx)
+		mlx_destroy_window(data->mlx, data->win);
+	data->win = NULL;
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
+	data->mlx = NULL;
 }

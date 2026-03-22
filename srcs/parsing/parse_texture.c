@@ -80,10 +80,10 @@ static void	process_texture_line(t_parsing *parsing, int fd, int *i)
 	if (parse_texture_line(parsing, trimmed))
 		(*i)++;
 	else if (is_map_line(trimmed))
-		(printf("Error: Map before all textures.\n"),
+		(free(trimmed), printf("Error: Map before all textures.\n"),
 			free_parsing(parsing), exit(ERRORS));
 	else
-		(printf("Error: Invalid identifier in texture section.\n"),
+		(free(trimmed), printf("Error: Bad identifier in texture section.\n"),
 			free_parsing(parsing), exit(ERRORS));
 	free(trimmed);
 }

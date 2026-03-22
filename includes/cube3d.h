@@ -53,6 +53,7 @@ typedef struct s_parsing
 	char	*ea_texture;
 	char	*floor_color;
 	char	*ceiling_color;
+	char	*map_str;
 	char	**map;
 	char	**cp_map;
 	int		player_start;

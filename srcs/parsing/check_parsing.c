@@ -46,23 +46,17 @@ static void	check_top_bottom(char **map, int len, t_parsing *parsing)
 	i = 0;
 	while (map[0][i])
 	{
-		if (map[0][i] != '1')
-		{
-			printf("Error: Top wall is not closed.\n");
-			free_parsing(parsing);
-			exit(ERRORS);
-		}
+		if (map[0][i] != '1' && map[0][i] != ' ')
+			(printf("Error: Top wall is not closed.\n"),
+				free_parsing(parsing), exit(ERRORS));
 		i++;
 	}
 	i = 0;
 	while (map[len - 1][i])
 	{
-		if (map[len - 1][i] != '1')
-		{
-			printf("Error: Bottom wall is not closed.\n");
-			free_parsing(parsing);
-			exit(ERRORS);
-		}
+		if (map[len - 1][i] != '1' && map[len - 1][i] != ' ')
+			(printf("Error: Bottom wall is not closed.\n"),
+				free_parsing(parsing), exit(ERRORS));
 		i++;
 	}
 }
@@ -76,19 +70,14 @@ static void	check_walls(char **map, t_parsing *parsing)
 		(printf("Error: Empty map.\n"), free_parsing(parsing), exit(ERRORS));
 	len = ft_arraylen(map);
 	if (len < 3)
-		(printf("Error: Map too small.\n"), free_parsing(parsing), exit(ERRORS));
+		(printf("Error: Map too small.\n"),
+			free_parsing(parsing), exit(ERRORS));
 	check_top_bottom(map, len, parsing);
 	i = 0;
 	while (i < len)
 	{
 		if (!map[i] || ft_strlen(map[i]) == 0)
 			(printf("Error: Empty line in map.\n"),
-				free_parsing(parsing), exit(ERRORS));
-		if (map[i][0] != '1')
-			(printf("Error: Left wall is not closed.\n"),
-				free_parsing(parsing), exit(ERRORS));
-		if (map[i][ft_strlen(map[i]) - 1] != '1')
-			(printf("Error: Right wall is not closed.\n"),
 				free_parsing(parsing), exit(ERRORS));
 		i++;
 	}

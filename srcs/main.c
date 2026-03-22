@@ -48,6 +48,7 @@ static int	init_game(t_data *data, t_parsing *parsing)
 	if (copy_parsing_to_data(data, parsing) != SUCCESS)
 		return (ERRORS);
 	init_player_dir(data, parsing);
+	detach_from_parsing(parsing);
 	if (init_mlx(data) != SUCCESS)
 		return (ERRORS);
 	if (init_textures_img(data) != SUCCESS)
@@ -75,7 +76,6 @@ int	main(int ac, char **av, char **env)
 		free_data(&data);
 		return (free_parsing(parsing), ERRORS);
 	}
-	detach_from_parsing(parsing);
 	free_parsing(parsing);
 	listen_input(&data);
 	render_frame(&data);

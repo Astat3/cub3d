@@ -26,7 +26,8 @@ static int	load_single_texture(t_data *data, t_img *img, char *path)
 {
 	if (!path)
 		return (ERRORS);
-	img->img = mlx_xpm_file_to_image(data->mlx, path, &img->width, &img->height);
+	img->img = mlx_xpm_file_to_image(data->mlx, path,
+			&img->width, &img->height);
 	if (!img->img)
 		return (printf("Error: Failed to load texture: %s\n", path), ERRORS);
 	img->addr = (int *)mlx_get_data_addr(img->img, &img->pixel_bits,
@@ -34,7 +35,7 @@ static int	load_single_texture(t_data *data, t_img *img, char *path)
 	if (!img->addr)
 	{
 		destroy_texture_img(data, img);
-		return (printf("Error: Failed to get texture data: %s\n", path), ERRORS);
+		return (printf("Failed to get texture data: %s\n", path), ERRORS);
 	}
 	return (SUCCESS);
 }
