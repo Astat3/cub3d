@@ -45,7 +45,8 @@ static int	is_map_line(char *line)
 {
 	if (!line || line[0] == '\n')
 		return (0);
-	if (line[0] == '1' || line[0] == '0' || line[0] == ' ')
+	if (line[0] == '1' || line[0] == '0' || line[0] == ' '
+		|| line[0] == '\t')
 		return (1);
 	if (line[0] == 'N' || line[0] == 'S' || line[0] == 'E' || line[0] == 'W')
 		return (1);
@@ -101,6 +102,7 @@ void	init_map(t_parsing *parsing, int fd)
 		line = read_line(fd, parsing);
 	}
 	close(fd);
+	parsing->fd = -1;
 	if (!parsing->map_str || parsing->map_str[0] == '\0')
 		(free_parsing(parsing), printf("Error: Missing map.\n"), exit(ERRORS));
 	parsing->map = ft_split(parsing->map_str, '\n');

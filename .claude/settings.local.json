@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(valgrind --track-fds=yes --leak-check=full ./cub3D tests/maps/err_empty_file.cub)",
+      "Bash(valgrind --track-fds=yes --leak-check=full ./cub3D tests/maps/err_color_negative.cub)",
+      "Bash(valgrind --track-fds=yes --leak-check=full ./cub3D tests/maps/err_open_wall.cub)",
+      "Bash(valgrind --track-fds=yes --leak-check=full ./cub3D tests/maps/err_no_player.cub)",
+      "Bash(valgrind --track-fds=yes --leak-check=full ./cub3D tests/maps/err_duplicate_no.cub)",
+      "Bash(valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./cub3D tests/maps/err_color_negative.cub)",
+      "Bash(valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./cub3D tests/maps/err_duplicate_no.cub)",
+      "Bash(make re:*)",
+      "Bash(done)"
+    ]
+  }
+}

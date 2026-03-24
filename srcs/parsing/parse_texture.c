@@ -29,7 +29,7 @@ static int	is_map_line(const char *line)
 	while (line[i])
 	{
 		if (line[i] != '0' && line[i] != '1' && line[i] != ' '
-			&& line[i] != 'N' && line[i] != 'S'
+			&& line[i] != '\t' && line[i] != 'N' && line[i] != 'S'
 			&& line[i] != 'E' && line[i] != 'W')
 			return (0);
 		i++;
@@ -77,14 +77,16 @@ static void	process_texture_line(t_parsing *parsing, int fd, int *i)
 		(free_parsing(parsing), exit(ERRORS));
 	if (trimmed[0] == '\0')
 		return (free(trimmed));
+	parsing->map_str = trimmed;
 	if (parse_texture_line(parsing, trimmed))
 		(*i)++;
 	else if (is_map_line(trimmed))
-		(free(trimmed), printf("Error: Map before all textures.\n"),
+		(printf("Error: Map before all textures.\n"),
 			free_parsing(parsing), exit(ERRORS));
 	else
-		(free(trimmed), printf("Error: Bad identifier in texture section.\n"),
+		(printf("Error: Bad identifier in texture section.\n"),
 			free_parsing(parsing), exit(ERRORS));
+	parsing->map_str = NULL;
 	free(trimmed);
 }
 

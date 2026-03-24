@@ -31,6 +31,8 @@ void	free_parsing(t_parsing *parsing)
 {
 	if (!parsing)
 		return ;
+	if (parsing->fd > 2)
+		close(parsing->fd);
 	if (parsing->no_texture)
 		free(parsing->no_texture);
 	if (parsing->so_texture)

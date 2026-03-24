@@ -30,7 +30,7 @@ static int	can_flood(t_parsing *parsing, int y, int x, char perso)
 {
 	if (!is_valid_pos(parsing, y, x))
 		return (-1);
-	if (parsing->cp_map[y][x] == ' ')
+	if (parsing->cp_map[y][x] == ' ' || parsing->cp_map[y][x] == '\t')
 		return (0);
 	if (parsing->cp_map[y][x] == '1' || parsing->cp_map[y][x] == 'F')
 		return (0);
@@ -70,7 +70,8 @@ void	check_map_flood(t_parsing *parsing, int new_y, int new_x, char perso)
 	}
 	if (parsing->cp_map[new_y][new_x] == '1'
 		|| parsing->cp_map[new_y][new_x] == 'F'
-		|| parsing->cp_map[new_y][new_x] == ' ')
+		|| parsing->cp_map[new_y][new_x] == ' '
+		|| parsing->cp_map[new_y][new_x] == '\t')
 		return ;
 	parsing->cp_map[new_y][new_x] = 'F';
 	flood_direction(parsing, new_y, new_x, perso);

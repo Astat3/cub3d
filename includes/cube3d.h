@@ -59,6 +59,7 @@ typedef struct s_parsing
 	int		player_start;
 	int		player_start_x;
 	int		player_start_y;
+	int		fd;
 }	t_parsing;
 
 typedef struct s_img

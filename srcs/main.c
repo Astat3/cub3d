@@ -36,6 +36,7 @@ static int	parsing_func(char *file, t_parsing *parsing)
 		close(fd);
 		return (ERRORS);
 	}
+	parsing->fd = fd;
 	init_textures(parsing, fd);
 	init_map(parsing, fd);
 	check_parsing(parsing);

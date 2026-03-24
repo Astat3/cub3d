@@ -23,7 +23,7 @@ static void	check_wrong_char(char **map, t_parsing *parsing)
 		j = -1;
 		while (map[i][++j])
 		{
-			if (!ft_strchr("01 NSEW", map[i][j]))
+			if (!ft_strchr("01 \tNSEW", map[i][j]))
 				(printf("Error: Invalid character '%c' in map.\n", map[i][j]),
 					free_parsing(parsing), exit(ERRORS));
 			if (ft_strchr("NSEW", map[i][j]))
@@ -46,7 +46,7 @@ static void	check_top_bottom(char **map, int len, t_parsing *parsing)
 	i = 0;
 	while (map[0][i])
 	{
-		if (map[0][i] != '1' && map[0][i] != ' ')
+		if (map[0][i] != '1' && map[0][i] != ' ' && map[0][i] != '\t')
 			(printf("Error: Top wall is not closed.\n"),
 				free_parsing(parsing), exit(ERRORS));
 		i++;
@@ -54,7 +54,8 @@ static void	check_top_bottom(char **map, int len, t_parsing *parsing)
 	i = 0;
 	while (map[len - 1][i])
 	{
-		if (map[len - 1][i] != '1' && map[len - 1][i] != ' ')
+		if (map[len - 1][i] != '1' && map[len - 1][i] != ' '
+			&& map[len - 1][i] != '\t')
 			(printf("Error: Bottom wall is not closed.\n"),
 				free_parsing(parsing), exit(ERRORS));
 		i++;
